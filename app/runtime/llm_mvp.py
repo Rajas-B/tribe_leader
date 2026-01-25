@@ -14,11 +14,14 @@ def build_llm():
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         raise RuntimeError("GROQ_API_KEY is not set")
+    llm_model = os.getenv("GROQ_MODEL")
+    if not llm_model:
+        raise RuntimeError("GROQ_MODEL is not set")
 
     return ChatOpenAI(
         openai_api_key=api_key,
         openai_api_base="https://api.groq.com/openai/v1",
-        model="llama-3.3-70b-versatile",
+        model=llm_model,
         temperature=0.3,
         max_tokens=700,
         timeout=30,
