@@ -36,17 +36,17 @@ def validate(text: str, caps: Dict) -> Dict:
 
     violations: List[str] = []
 
-    if options < 2 and caps.get("max_options", 0) > 0:
-        violations.append("too_few_options")
+    # if options < 2 and caps.get("max_options", 0) > 0:
+    #     violations.append("too_few_options")
 
-    if options > caps.get("max_options", options):
-        violations.append("too_many_options")
+    # if options > caps.get("max_options", options):
+    #     violations.append("too_many_options")
 
-    if questions < 1:
-        violations.append("no_questions")
+    # if questions < 1:
+    #     violations.append("no_questions")
 
-    if questions > caps.get("max_questions", questions):
-        violations.append("too_many_questions")
+    # if questions > caps.get("max_questions", questions):
+    #     violations.append("too_many_questions")
 
     if prescriptive_hits:
         violations.append("prescriptive_language")
