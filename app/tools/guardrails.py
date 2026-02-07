@@ -20,7 +20,6 @@ PRESCRIPTIVE_PATTERNS = [
     r"\bi recommend\b",
     r"\bthe best (option|choice)\b",
     r"\bdo this\b",
-    r"\bmy advice\b",
     r"\bi think you should\b",
 ]
 
