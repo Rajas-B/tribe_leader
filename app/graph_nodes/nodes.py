@@ -88,7 +88,7 @@ def apply_caps(state: TribeLeaderState) -> TribeLeaderState:
     # High stress → stabilize only
     if needs_stabilization:
         caps = {
-            "max_tokens": 1500,
+            "max_tokens": 750,
             "max_questions": 1,
             "max_options": 0,   # CRITICAL: no options allowed
             "history_window": 4,
@@ -97,7 +97,7 @@ def apply_caps(state: TribeLeaderState) -> TribeLeaderState:
     # Moderate stress → constrained guidance
     elif stress_score >= 0.35:
         caps = {
-            "max_tokens": 2000,
+            "max_tokens": 1000,
             "max_questions": 1,
             "max_options": 3,
             "history_window": 6,
@@ -106,8 +106,8 @@ def apply_caps(state: TribeLeaderState) -> TribeLeaderState:
     # Calm → full guidance
     else:
         caps = {
-            "max_tokens": 3000,
-            "max_questions": 2,
+            "max_tokens": 1500,
+            "max_questions": 3,
             "max_options": 4,
             "history_window": 8,
         }
@@ -129,7 +129,7 @@ def stabilize(state: TribeLeaderState, llm) -> TribeLeaderState:
     messages = state.get("messages", [])
 
     # Safety defaults
-    max_tokens = caps.get("max_tokens", 1000)
+    max_tokens = caps.get("max_tokens", 500)
 
     prompt_messages = [
         *messages,
@@ -173,7 +173,7 @@ def guide(state: TribeLeaderState, llm) -> TribeLeaderState:
     caps = state.get("caps", {})
 
     # Safety defaults
-    max_tokens = caps.get("max_tokens", 2000)
+    max_tokens = caps.get("max_tokens", 1500)
 
     # Build prompt context
     prompt_messages = [
@@ -233,7 +233,7 @@ def guardrail_validate(state: TribeLeaderState, llm) -> TribeLeaderState:
 
     response = llm.invoke(
         messages + [AIMessage(content=regen_prompt)],
-        max_tokens=caps.get("max_tokens", 2000),
+        max_tokens=caps.get("max_tokens", 1500),
     )
 
     regenerated = (response.content or "").strip()
